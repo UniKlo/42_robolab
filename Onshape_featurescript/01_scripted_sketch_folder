@@ -1,0 +1,143 @@
+FeatureScript 1096;
+import(path : "onshape/std/geometry.fs", version : "1096.0");
+
+annotation { "Feature Type Name" : "folder" }
+export const myfolder = defineFeature(function(context is Context, id is Id, definition is map)
+
+    precondition
+
+    {
+
+        annotation { "Name" : "Height" }
+        isLength(definition.fheight, { (millimeter) : [25, 75, 360],
+                    } as LengthBoundSpec);
+        annotation { "Name" : "width" }
+        isLength(definition.fwidth, { (millimeter) : [25, 100, 360],
+                    } as LengthBoundSpec);
+    }
+    {
+
+        var height = definition.fheight / millimeter;
+        var width = definition.fwidth / millimeter;
+
+
+        var sketch1 = newSketch(context, id + "sketch1", {
+                "sketchPlane" : qCreatedBy(makeId("Top"), EntityType.FACE)
+            });
+
+        //one side
+
+        skLineSegment(sketch1, "b", {
+                    "start" : vector(0, -1) * height / 2 * millimeter,
+                    "end" : vector(width / 2, -height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "right", {
+                    "start" : vector(width / 2, -height / 2) * millimeter,
+                    "end" : vector(width / 2, height / 2 - width / 10) * millimeter
+                });
+        skArc(sketch1, "rcorner", {
+                    "start" : vector(width / 2, height / 2 - width / 10) * millimeter,
+                    "mid" : vector(width / 2 - width / 10 + width / 20 * sqrt(2), height / 2 - width / 10 + width / 20 * sqrt(2)) * millimeter,
+                    "end" : vector(width / 2 - width / 10, height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "top", {
+                    "start" : vector(width / 2 - width / 10, height / 2) * millimeter,
+                    "end" : vector(width / 4, height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "cut", {
+                    "start" : vector(width / 4, height / 2) * millimeter,
+                    "end" : vector(0, height / 2 - width / 4) * millimeter
+                });
+
+        skRectangle(sketch1, "box", {
+                    "firstCorner" : vector(-height / 20, -height / 2 + height / 10) * millimeter,
+                    "secondCorner" : vector(height / 20, -height / 2 + height * 3 / 10) * millimeter
+                });
+
+
+        skArc(sketch1, "rrarc", {
+                    "start" : vector(width / 2 - height / 5, -height / 2 + width / 5) * millimeter,
+                    "mid" : vector(width / 2 - height / 5 + width / 20, -height / 2 + width / 5 + width / 20) * millimeter,
+                    "end" : vector(width / 2 - height / 5, -height / 2 + width / 5 + width / 10) * millimeter
+                });
+
+        skArc(sketch1, "rlarc", {
+                    "start" : vector(width / 2 - height / 5 - width / 10, -height / 2 + width / 5) * millimeter,
+                    "mid" : vector(width / 2 - height / 5 - width / 10 - width / 20, -height / 2 + width / 5 + width / 20) * millimeter,
+                    "end" : vector(width / 2 - height / 5 - width / 10, -height / 2 + width / 5 + width / 10) * millimeter
+                });
+
+        skLineSegment(sketch1, "slot_b", {
+                    "start" : vector(width / 2 - height / 5 - width / 10, -height / 2 + width / 5) * millimeter,
+                    "end" : vector(width / 2 - height / 5, -height / 2 + width / 5) * millimeter
+                });
+
+        skLineSegment(sketch1, "slot_t", {
+                    "start" : vector(width / 2 - height / 5 - width / 10, -height / 2 + width / 5 + width / 10) * millimeter,
+                    "end" : vector(width / 2 - height / 5, -height / 2 + width / 5 + width / 10) * millimeter
+                });
+
+//another side
+
+        skLineSegment(sketch1, "b1", {
+                    "start" : vector(0, -height / 2) * millimeter,
+                    "end" : vector(-width / 2, -height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "right1", {
+                    "start" : vector(-width / 2, -height / 2) * millimeter,
+                    "end" : vector(-width / 2, height / 2 - width / 10) * millimeter
+                });
+        skArc(sketch1, "rcorner1", {
+                    "start" : vector(-width / 2, height / 2 - width / 10) * millimeter,
+                    "mid" : vector(-(width / 2 - width / 10 + width / 20 * sqrt(2)), height / 2 - width / 10 + width / 20 * sqrt(2)) * millimeter,
+                    "end" : vector(-(width / 2 - width / 10), height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "top1", {
+                    "start" : vector(-(width / 2 - width / 10), height / 2) * millimeter,
+                    "end" : vector(-width / 4, height / 2) * millimeter
+                });
+
+        skLineSegment(sketch1, "cut1", {
+                    "start" : vector(-width / 4, height / 2) * millimeter,
+                    "end" : vector(0, height / 2 - width / 4) * millimeter
+                });
+
+        skArc(sketch1, "rrarc1", {
+                    "start" : vector(-(width / 2 - height / 5), -height / 2 + width / 5) * millimeter,
+                    "mid" : vector(-(width / 2 - height / 5 + width / 20), -height / 2 + width / 5 + width / 20) * millimeter,
+                    "end" : vector(-(width / 2 - height / 5), -height / 2 + width / 5 + width / 10) * millimeter
+                });
+
+        skArc(sketch1, "rlarc1", {
+                    "start" : vector(-(width / 2 - height / 5 - width / 10), -height / 2 + width / 5) * millimeter,
+                    "mid" : vector(-(width / 2 - height / 5 - width / 10 - width / 20), -height / 2 + width / 5 + width / 20) * millimeter,
+                    "end" : vector(-(width / 2 - height / 5 - width / 10), -height / 2 + width / 5 + width / 10) * millimeter
+                });
+
+        skLineSegment(sketch1, "slot_b1", {
+                    "start" : vector(-(width / 2 - height / 5 - width / 10), -height / 2 + width / 5) * millimeter,
+                    "end" : vector(-(width / 2 - height / 5), -height / 2 + width / 5) * millimeter
+                });
+
+        skLineSegment(sketch1, "slot_t1", {
+                    "start" : vector(-(width / 2 - height / 5 - width / 10), -height / 2 + width / 5 + width / 10) * millimeter,
+                    "end" : vector(-(width / 2 - height / 5), -height / 2 + width / 5 + width / 10) * millimeter
+                });
+                
+                
+        skSolve(sketch1);
+
+        /*
+           mirror(context, id + "mirror1", {
+           "patternType" : MirrorType.PART,
+           "entities" : qCreatedBy(id + "sketch1", EntityType.BODY),
+           "mirrorPlane" : qCreatedBy(makeId("Right"), EntityType.FACE)
+           });
+
+         */
+    });

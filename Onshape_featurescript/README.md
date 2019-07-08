@@ -1,2 +1,4 @@
-This is Onshape!
-![](01_sketch.gif)
+This is Onshape!\n
+![](01_sketch.gif)\n
+![](02_lego.gif)
+
